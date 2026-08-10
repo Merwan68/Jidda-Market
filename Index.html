@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jiddah Market & Cosmo</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff4757;
+            --secondary-color: #ffa502;
+            --accent-color: #2ed573;
+            --dark-color: #2f3542;
+            --light-bg: #fffaf0;
+            --card-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        /* Top Bar & Header */
+        .top-bar {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 10px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        header {
+            background: white;
+            padding: 18px 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span {
+            color: var(--secondary-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1578916171728-46686eac8d58?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: inline-block;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            background: #ff6b81;
+        }
+
+        /* Categories / Services Section */
+        .section-title {
+            text-align: center;
+            margin: 60px 0 20px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark-color);
+        }
+
+        .section-title p {
+            color: #707070;
+            font-size: 1.1rem;
+        }
+
+        .category-filter {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            padding: 0 20px;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 25px;
+            background: white;
+            color: var(--primary-color);
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 30px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto 60px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border: 1px solid #f1f1f1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+
+        .product-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: #ffeaa7;
+            color: #d63031;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .product-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .product-info p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Location Section */
+        .location-section {
+            background: white;
+            padding: 60px 5%;
+            margin-top: 40px;
+        }
+
+        .location-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .location-details h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .location-details p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .map-card {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 2px dashed var(--secondary-color);
+        }
+
+        .map-card i {
+            font-size: 4rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 60px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .c-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+        }
+
+        .c-card i {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .c-card a {
+            color: var(--primary-color);
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.3rem; }
+            .location-container { grid-template-columns: 1fr; }
+            nav ul { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Info Bar -->
+    <div class="top-bar">
+        <div><i class="fas fa-map-marker-alt"></i> Visit Us Today | Quality Guaranteed</div>
+        <div>
+            <a href="tel:+251949707979"><i class="fas fa-phone"></i> +251 949 707 979</a>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-shopping-bag"></i> Jiddah <span>Market & Cosmo</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services & Products</a></li>
+                <li><a href="#location">Location</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>All Your Needs in One Place</h1>
+            <p>Premium Cosmetics, Baby Care, Toys, Fresh Dairy & Chilled Beverages</p><br>
+            <a href="#services" class="btn">Explore Categories</a>
+        </div>
+    </section>
+
+    <!-- Services / Products Category Section -->
+    <section id="services">
+        <div class="section-title">
+            <h2>Our Service Categories</h2>
+            <p>Browse through our brightly curated collections</p>
+        </div>
+
+        <div class="category-filter">
+            <button class="filter-btn active" onclick="filterProducts('all')">All Products</button>
+            <button class="filter-btn" onclick="filterProducts('cosmetics')">Cosmetics & Beauty</button>
+            <button class="filter-btn" onclick="filterProducts('baby')">Baby Care</button>
+            <button class="filter-btn" onclick="filterProducts('toys')">Kids Toys</button>
+            <button class="filter-btn" onclick="filterProducts('drinks')">Beverages & Dairy</button>
+        </div>
+
+        <div class="products-grid">
+            <!-- Cosmetics Items -->
+            <div class="product-card cosmetics">
+                <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80" class="product-img" alt="Skincare Essentials">
+                <div class="product-info">
+                    <span class="product-tag">Cosmetics</span>
+                    <h3>Skincare & Serums</h3>
+                    <p>Premium moisturizing lotions, facial creams, and anti-aging treatments.</p>
+                </div>
+            </div>
+
+            <div class="product-card cosmetics">
+                <img src="https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=600&q=80" class="product-img" alt="Luxury Perfumes">
+                <div class="product-info">
+                    <span class="product-tag">Cosmetics</span>
+                    <h3>Fragrances & Perfumes</h3>
+                    <p>Exclusive body sprays, designer perfumes, and long-lasting colognes.</p>
+                </div>
+            </div>
+
+            <div class="product-card cosmetics">
+                <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80" class="product-img" alt="Makeup Essentials">
+                <div class="product-info">
+                    <span class="product-tag">Cosmetics</span>
+                    <h3>Makeup Essentials</h3>
+                    <p>Lipsticks, foundations, palettes, and complete makeup tool kits.</p>
+                </div>
+            </div>
+
+            <div class="product-card cosmetics">
+                <img src="https://images.unsplash.com/photo-1608248597261-833258657640?auto=format&fit=crop&w=600&q=80" class="product-img" alt="Hair Care">
+                <div class="product-info">
+                    <span class="product-tag">Cosmetics</span>
+                    <h3>Hair Care & Oils</h3>
+                    <p>Nourishing shampoos, conditioners, and organic hair growth oils.</p>
+                </div>
+            </div>
+
+            <!-- Baby Care Items -->
+            <div class="product-card baby">
+                <img src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=600&q=80" class="product-img" alt="Baby Essentials">
+                <div class="product-info">
+                    <span class="product-tag">Baby Care</span>
+                    <h3>Baby Formulas & Food</h3>
+                    <p>Nutritious baby ingredients, cereal mixes, and organic purees.</p>
+                </div>
+            </div>
+
+            <div class="product-card baby">
+                <img src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80" class="product-img" alt="Baby Hygiene">
+                <div class="product-info">
+                    <span class="product-tag">Baby Care</span>
+                    <h3>Diapers & Hygiene Wipes</h3>
+                    <p>Soft hypoallergenic diapers, sensitive skin wipes, and baby powders.</p>
+                </div>
+            </div>
+
+            <!-- Toys Items -->
+            <div class="product-card toys">
+                <img src="https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?auto=format&fit=crop&w=600&q=80" class="product-img" alt="Children Toys">
+                <div class="product-info">
+                    <span class="product-tag">Toys</span>
+                    <h3>Interactive & Learning Toys</h3>
+                    <p>Fun puzzles, building blocks, and creative play sets for kids.</p>
+                </div>
+            </div>
+
+            <div class="product-card toys">
+                <img src="https://images.unsplash.com/photo-1558060370-d644479cb6f7?auto=format&fit=crop&w=600&q=80" class="product-img" alt="Plush Toys">
+                <div class="product-info">
+                    <span class="product-tag">Toys</span>
+                    <h3>Plush Toys & Action Figures</h3>
+                    <p>Soft teddy bears, stuffed animals, and superhero figures.</p>
+                </div>
+            </div>
+
+            <!-- Juices, Milk, Water & Soft Drinks Items -->
+            <div class="product-card drinks">
+                <img src="https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?auto=format&fit=crop&w=600&q=80" class="product-img" alt="Fresh Juices">
+                <div class="product-info">
+                    <span class="product-tag">Juices & Drinks</span>
+                    <h3>Fresh & Natural Juices</h3>
+                    <p>Chilled orange, mango, apple, and mixed fruit packed juices.</p>
+                </div>
+            </div>
+
+            <div class="product-card drinks">
+                <img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=600&q=80" class="product-img" alt="Fresh Milk">
+                <div class="product-info">
+                    <span class="product-tag">Milk & Dairy</span>
+                    <h3>Fresh Milk & Dairy Drinks</h3>
+                    <p>Full cream milk, pasteurized dairy, flavored milk, and yogurts.</p>
+                </div>
+            </div>
+
+            <div class="product-card drinks">
+                <img src="https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=600&q=80" class="product-img" alt="Mineral Water">
+                <div class="product-info">
+                    <span class="product-tag">Mineral Water</span>
+                    <h3>Pure Mineral Water</h3>
+                    <p>Purified bottled drinking water in various sizes and packs.</p>
+                </div>
+            </div>
+
+            <div class="product-card drinks">
+                <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80" class="product-img" alt="Soft Drinks">
+                <div class="product-info">
+                    <span class="product-tag">Soft Drinks</span>
+                    <h3>Soft Drinks & Sodas</h3>
+                    <p>Cold carbonated soft drinks, energy drinks, and sparkling sodas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location-section" id="location">
+        <div class="location-container">
+            <div class="location-details">
+                <h3>Find Jiddah Market & Cosmo</h3>
+                <p>We are conveniently located to serve you with the best imported cosmetics, fresh dairy, juices, beverages, baby ingredients, and kids' entertainment items.</p>
+                <p><i class="fas fa-map-marker-alt" style="color: var(--primary-color);"></i> Direct Navigation via Google Maps link available below.</p>
+                <a href="https://maps.app.goo.gl/uSDDkv1p5s3FKAGd9?g_st=ac" target="_blank" class="btn"><i class="fas fa-directions"></i> Get Directions on Google Maps</a>
+            </div>
+            <div class="map-card">
+                <i class="fas fa-store"></i>
+                <h4>Jiddah Market & Cosmo</h4>
+                <p style="margin-top: 10px; color: #555;">Click the button to open Google Maps navigation directly to our store entrance.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="section-title">
+            <h2>Contact & Customer Care</h2>
+            <p>Get in touch with us for inquiries, pre-orders, or special requests</p>
+        </div>
+
+        <div class="contact-cards">
+            <div class="c-card">
+                <i class="fas fa-phone-alt"></i>
+                <h3>Call Us</h3>
+                <p style="margin: 10px 0;">Direct Phone Line</p>
+                <a href="tel:+251949707979">+251 949 707 979</a>
+            </div>
+
+            <div class="c-card">
+                <i class="fab fa-whatsapp" style="color: #25D366;"></i>
+                <h3>WhatsApp Chat</h3>
+                <p style="margin: 10px 0;">Instant Assistance</p>
+                <a href="https://wa.me/251949707979" target="_blank">Chat on WhatsApp</a>
+            </div>
+
+            <div class="c-card">
+                <i class="fas fa-clock" style="color: var(--secondary-color);"></i>
+                <h3>Opening Hours</h3>
+                <p style="margin-top: 10px; font-weight: 600;">Monday - Sunday</p>
+                <p style="color: #666;">8:00 AM – 10:00 PM</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Jiddah Market and Cosmo. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Interactive Filtering Script -->
+    <script>
+        function filterProducts(category) {
+            const cards = document.querySelectorAll('.product-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.classList.contains(category)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
